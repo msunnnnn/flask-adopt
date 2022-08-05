@@ -6,7 +6,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from models import db, connect_db, Pet
 
-from forms import AddPetForm
+from forms import AddPetForm, EditPetForm
 
 app = Flask(__name__)
 
@@ -56,3 +56,22 @@ def add_pet():
     else:
         return render_template("add.html", form = form)
         # why does it not work if the html is named add_pet.html?
+
+
+@app.route("/<int:uid>", methods=["GET", "POST"])
+def edit_user(uid):
+    """Show pet edit form and handle edit."""
+
+    user = Pet.query.get_or_404(uid)
+    form = EditPetForm(obj=user)
+
+    if form.validate_on_submit():
+        user.photo_url = form.photo_url.data
+        user.notes = form.notes.data
+        user.available = form.available.data
+        db.session.commit()
+        flash(f"Pet {uid} updated!")
+        return redirect(f"/{uid}")
+
+    else:
+        return render_template("/edit.html", form=form, pet = user)

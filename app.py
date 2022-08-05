@@ -33,7 +33,7 @@ def load_root_page():
     return render_template("index.html", pets = all_pets)
 
 @app.route('/add', methods = ['GET', 'POST'])
-def add_pet():
+def show_add_pet_form():
     """Pet add form; handle adding"""
 
     form = AddPetForm()
@@ -45,8 +45,11 @@ def add_pet():
         age = form.age.data
         notes = form.notes.data
 
-        new_pet = Pet(name = name, species = species,photo_url = photo_url,
-                      age = age, notes = notes)
+        new_pet = Pet(name = name,
+                      species = species,
+                      photo_url = photo_url,
+                      age = age,
+                      notes = notes)
         db.session.add(new_pet)
         db.session.commit()
 
@@ -58,20 +61,20 @@ def add_pet():
         # why does it not work if the html is named add_pet.html?
 
 
-@app.route("/<int:uid>", methods=["GET", "POST"])
-def edit_user(uid):
+@app.route("/<int:pet_id>", methods=["GET", "POST"])
+def show_edit_pet_form(pet_id):
     """Show pet edit form and handle edit."""
 
-    user = Pet.query.get_or_404(uid)
-    form = EditPetForm(obj=user)
+    pet = Pet.query.get_or_404(pet_id)
+    form = EditPetForm(obj=pet)
 
     if form.validate_on_submit():
-        user.photo_url = form.photo_url.data
-        user.notes = form.notes.data
-        user.available = form.available.data
+        pet.photo_url = form.photo_url.data
+        pet.notes = form.notes.data
+        pet.available = form.available.data
         db.session.commit()
-        flash(f"Pet {uid} updated!")
-        return redirect(f"/{uid}")
+        flash(f"Pet {pet_id} updated!")
+        return redirect(f"/{pet_id}")
 
     else:
-        return render_template("/edit.html", form=form, pet = user)
+        return render_template("/edit.html", form = form, pet = pet)

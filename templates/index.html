@@ -10,7 +10,7 @@ Pet list
 
 <ul class="list-pet">
   {% for pet in pets %}
-  <li class="list-pet"><a>{{ pet.name }} {% if pet.available %} <p>available</p> {% endif %}{% if pet.photo_url %} <img src={{pet.photo_url}} alt="">{% endif %}
+  <li class="list-pet"><a href=/{{pet.id}}>{{ pet.name }} {% if pet.available %} <p>available</p> {% endif %}{% if pet.photo_url %} <img src={{pet.photo_url}} alt="">{% endif %}
   </a></li>
   {% endfor %}
 </ul>

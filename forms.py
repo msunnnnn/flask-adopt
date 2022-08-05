@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, TextAreaField
-from wtforms.validators import InputRequired, Optional, Email
+from wtforms.validators import InputRequired, Optional, Email, URL
 
 
 class AddPetForm(FlaskForm):
@@ -10,17 +10,18 @@ class AddPetForm(FlaskForm):
     name = StringField("Pet name:",
         validators= [InputRequired()])
 
-    species = StringField("Species",
+    species = SelectField("Species:",
+        choices= [('cat', 'Cat'), ('dog', 'Dog'), ('porcupine', 'Porcupine')],
         validators= [InputRequired()])
 
     photo_url = StringField("Photo URL",
-        validators=[Optional()])
+        validators=[URL(), Optional()])
 
     age = SelectField("Age:",
         choices= [('baby', 'Baby'), ('young', 'Young'), ('adult', 'Adult'),
                   ('senior', 'Senior')],
         validators= [InputRequired()])
-        
+
     notes = TextAreaField("Notes:",
         validators=[Optional()])
 

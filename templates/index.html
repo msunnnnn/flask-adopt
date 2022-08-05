@@ -1,17 +1,20 @@
 {% extends 'base.html' %}
 
-{% block TITLE %}
+{% block title %}
 Pet list
 {% endblock %}
 
-{% block CONTENT %}
+{% block content %}
 <h1>Pet listings</h1>
+
 
 <ul class="list-pet">
   {% for pet in pets %}
-  <li class="list-pet"><a href="/users/{{user.id}}" >{{ pet.name }} {% if pet.available == true %}{% endif %}</a></li>
+  <li class="list-pet"><a>{{ pet.name }} {% if pet.available %} <p>available</p> {% endif %}{% if pet.photo_url %} <img src={{pet.photo_url}} alt="">{% endif %}
+  </a></li>
   {% endfor %}
 </ul>
 
 
 {% endblock %}
+

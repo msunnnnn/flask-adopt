@@ -6,11 +6,13 @@ db.create_all()
 
 
 # add pet
-Floki = Pet(name = "Floki", species = "Doberman", age = "baby", available = False)
+floki = Pet(name = "Floki", species = "Doberman", photo_url = 'https://cdn.shopify.com/s/files/1/2456/1591/files/ashthegermanshepherd_large.JPG?v=1588952527', age = "baby", available = False)
 
-Biscuit = Pet(name = "Biscuit", species = "Cute", age = "young", available = False)
+biscuit = Pet(name = "Biscuit", species = "Cute", age = "young", available = False)
 
+ruby = Pet(name = "Ruby", species= "dog", age = "senior", available = True)
 
-db.session.add(Floki)
-db.session.add(Biscuit)
+db.session.add(floki)
+db.session.add(biscuit)
+db.session.add(ruby)
 db.session.commit()
